@@ -1,24 +1,12 @@
-# quiz-game
+<h1 align="center">Quiz Game</h1>
 
-## Project setup
-```
-npm install
-```
+## :computer: Projeto
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Repositório de uma aplicação web para simular um quiz game, código fonte do projeto foi baseado no curso [Vue JS 3: Desenvolvimento Web Moderno com Vuex & Vue Router](https://www.udemy.com/course/vue-js-3-desenvolvimento-web-moderno-com-vuex-vue-router/).
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## :floppy_disk: Clonar repositório
 
-### Lints and fixes files
-```
-npm run lint
-```
+```git clone https://github.com/PauloAlves8039/vue-quiz-game.git```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Author
+:boy: [Paulo Alves](https://github.com/PauloAlves8039)

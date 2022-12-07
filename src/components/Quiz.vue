@@ -17,6 +17,13 @@
 <script>
 export default {
   name: "App",
+  created() {
+    let url = 'https://opentdb.com/api.php?amount=1&category=18';
+    this.axios.get(url)
+    .then((response) => {
+      console.log(response.data.results[0]);
+    });
+  },
 };
 </script>
 
@@ -35,9 +42,9 @@ export default {
     height: 40px;
     min-width: 120px;
     padding: 0 16px;
-    color: #FFF;
-    background-color: #1867C0;
-    border: 1px solid #1867C0;
+    color: #fff;
+    background-color: #1867c0;
+    border: 1px solid #1867c0;
     cursor: pointer;
   }
 }

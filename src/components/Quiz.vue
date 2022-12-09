@@ -29,7 +29,7 @@ export default {
   computed: {
     answers() {
       let answers = JSON.parse(JSON.stringify(this.incorrectAnswers));
-      answers.push(this.correctAnswer);
+      answers.splice(Math.round(Math.random() * answers.length), 0, this.correctAnswer);
       return answers;
     }
   },

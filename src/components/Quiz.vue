@@ -4,15 +4,35 @@
       <h1 v-html="this.question"></h1>
 
       <template v-for="(answer, index) in this.answers" :key="index">
-        <input 
-          type="radio" 
-          name="options" 
-          :value="answer" 
-          v-model="this.chosen_answer"/>
+        <input
+          :disabled="this.answerSubmitted"
+          type="radio"
+          name="options"
+          :value="answer"
+          v-model="this.chosenAnswer"
+        />
         <label v-html="answer"></label><br />
       </template>
 
-      <button @click="this.submitAnswer()" class="send" type="button">Send</button>
+      <button @click="this.submitAnswer()" class="send" type="button">
+        Send
+      </button>
+
+      <section class="result" v-if="this.answerSubmitted">
+        <template v-if="this.chosenAnswer == this.correctAnswer">
+          <h4>
+            &#9989; Congratulations, the answer "{{ this.correctAnswer }}" it's correct.
+          </h4>
+        </template>
+        <template v-else>
+          <h4>
+            &#10060; I'm Sorry, you picked the wrong answer. The correct is "{{ this.correctAnswer }}".
+          </h4>
+        </template>
+        <button @click="this.getNewQuestion()" class="send" type="button">
+          Next question
+        </button>
+      </section>
     </template>
   </div>
 </template>
@@ -26,7 +46,8 @@ export default {
       question: undefined,
       incorrectAnswers: undefined,
       correctAnswer: undefined,
-      chosen_answer: undefined
+      chosenAnswer: undefined,
+      answerSubmitted: false,
     };
   },
 
@@ -44,16 +65,17 @@ export default {
 
   methods: {
     submitAnswer() {
-      if (!this.chosen_answer) {
-        alert('Pick one of the options.');
-      }else {
-        if (this.chosen_answer == this.correctAnswer) {
-          alert('You got it right!');
-        }else {
-          alert('You got it wrong!');
+      if (!this.chosenAnswer) {
+        alert("Pick one of the options.");
+      } else {
+        this.answerSubmitted = true;
+        if (this.chosenAnswer == this.correctAnswer) {
+          console.log("You got it right!");
+        } else {
+          console.log("You got it wrong!");
         }
       }
-    }
+    },
   },
 
   created() {

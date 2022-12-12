@@ -20,19 +20,16 @@
 
       <section class="result" v-if="this.answerSubmitted">
         <template v-if="this.chosenAnswer == this.correctAnswer">
-          <h4>
-            &#9989; Congratulations, the answer "{{ this.correctAnswer }}" it's correct.
-          </h4>
+          <h4 v-html="'&#9989; Congratulations, the answer ' + this.correctAnswer + ' is correct.'"></h4>
         </template>
         <template v-else>
-          <h4>
-            &#10060; I'm Sorry, you picked the wrong answer. The correct is "{{ this.correctAnswer }}".
-          </h4>
+          <h4 v-html="'&#10060; I´m Sorry, you picked the wrong answer. The correct is' + this.correctAnswer + '.'"></h4>
         </template>
         <button @click="this.getNewQuestion()" class="send" type="button">
           Next question
         </button>
       </section>
+
     </template>
   </div>
 </template>
@@ -54,9 +51,7 @@ export default {
   computed: {
     answers() {
       let answers = JSON.parse(JSON.stringify(this.incorrectAnswers));
-      answers.splice(
-        Math.round(Math.random() * answers.length),
-        0,
+      answers.splice(Math.round(Math.random() * answers.length), 0,
         this.correctAnswer
       );
       return answers;
@@ -76,15 +71,24 @@ export default {
         }
       }
     },
+
+    getNewQuestion() {
+        this.answerSubmitted = false;
+        this.chosenAnswer = undefined;
+        this.question = undefined;
+
+        let url = "https://opentdb.com/api.php?amount=1&category=18";
+        
+        this.axios.get(url).then((response) => {
+        this.question = response.data.results[0].question;
+        this.incorrectAnswers = response.data.results[0].incorrect_answers;
+        this.correctAnswer = response.data.results[0].correct_answer;
+      });
+    }
   },
 
   created() {
-    let url = "https://opentdb.com/api.php?amount=1&category=18";
-    this.axios.get(url).then((response) => {
-      this.question = response.data.results[0].question;
-      this.incorrectAnswers = response.data.results[0].incorrect_answers;
-      this.correctAnswer = response.data.results[0].correct_answer;
-    });
+    this.getNewQuestion();
   },
 };
 </script>

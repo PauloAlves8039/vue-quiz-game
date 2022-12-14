@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-
     <ScoreBoard :winCount="this.winCount" :loseCount="this.loseCount" />
 
     <template v-if="this.question">
@@ -26,25 +25,23 @@
           <h4 v-html="'&#9989; Congratulations, the answer ' + this.correctAnswer + ' is correct.'"></h4>
         </template>
         <template v-else>
-          <h4 v-html="'&#10060; I´m Sorry, you picked the wrong answer. The correct is' + this.correctAnswer + '.'"></h4>
+          <h4 v-html="'&#10060; I´m Sorry, you picked the wrong answer. The correct is' + this.correctAnswer + '.' "></h4>
         </template>
         <button @click="this.getNewQuestion()" class="send" type="button">
           Next question
         </button>
       </section>
-
     </template>
   </div>
 </template>
 
 <script>
-import ScoreBoard from '@/components/ScoreBoard.vue';
+import ScoreBoard from "@/components/ScoreBoard.vue";
 
 export default {
-
   name: "App",
   components: {
-    ScoreBoard
+    ScoreBoard,
   },
 
   data() {
@@ -55,16 +52,14 @@ export default {
       chosenAnswer: undefined,
       answerSubmitted: false,
       winCount: 0,
-      loseCount: 0
+      loseCount: 0,
     };
   },
 
   computed: {
     answers() {
       let answers = JSON.parse(JSON.stringify(this.incorrectAnswers));
-      answers.splice(Math.round(Math.random() * answers.length), 0,
-        this.correctAnswer
-      );
+      answers.splice(Math.round(Math.random() * answers.length), 0, this.correctAnswer);
       return answers;
     },
   },
@@ -84,18 +79,18 @@ export default {
     },
 
     getNewQuestion() {
-        this.answerSubmitted = false;
-        this.chosenAnswer = undefined;
-        this.question = undefined;
+      this.answerSubmitted = false;
+      this.chosenAnswer = undefined;
+      this.question = undefined;
 
-        let url = "https://opentdb.com/api.php?amount=1&category=18";
-        
-        this.axios.get(url).then((response) => {
+      let url = "https://opentdb.com/api.php?amount=1&category=18";
+
+      this.axios.get(url).then((response) => {
         this.question = response.data.results[0].question;
         this.incorrectAnswers = response.data.results[0].incorrect_answers;
         this.correctAnswer = response.data.results[0].correct_answer;
       });
-    }
+    },
   },
 
   created() {
@@ -119,10 +114,27 @@ export default {
     height: 40px;
     min-width: 120px;
     padding: 0 16px;
-    color: #fff;
-    background-color: #1867c0;
-    border: 1px solid #1867c0;
+    color: #1867c0;
+    font-weight: 600;
+    background-color: #fff;
+    border: 1px solid #101010;
     cursor: pointer;
   }
+  button.send:hover {
+    margin-top: 12px;
+    height: 40px;
+    min-width: 120px;
+    padding: 0 16px;
+    color: #fff;
+    font-weight: 600;
+    background-color: #1867c0;
+    border: 1px solid #101010;
+    transition: 1s;
+    cursor: pointer;
+  }
+}
+
+.result {
+  font-weight: 600;
 }
 </style>
